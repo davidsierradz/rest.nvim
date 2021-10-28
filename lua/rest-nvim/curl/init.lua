@@ -36,6 +36,7 @@ M.get_or_create_buf = function()
   vim.api.nvim_buf_set_name(new_bufnr, tmp_name)
   vim.api.nvim_buf_set_option(new_bufnr, "ft", "httpResult")
   vim.api.nvim_buf_set_option(new_bufnr, "buftype", "nofile")
+  vim.api.nvim_set_option("foldlevelstart", 1)
 
   return new_bufnr
 end
@@ -98,6 +99,7 @@ local function create_callback(method, url)
       vim.cmd(cmd_split .. res_bufnr)
       -- Set unmodifiable state
       vim.api.nvim_buf_set_option(res_bufnr, "modifiable", false)
+      vim.api.nvim_win_set_option(vim.fn.bufwinid(res_bufnr), "foldmethod", "indent")
     end
 
     -- Send cursor in response buffer to start
